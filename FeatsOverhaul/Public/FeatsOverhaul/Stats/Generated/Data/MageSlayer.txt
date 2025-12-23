@@ -1,4 +1,4 @@
-//  ===================================Mage Slayer: Break Concentration ===================================
+//  =================================== Mage Slayer: Break Concentration ===================================
 // Effect is now an aura and make passive highlighted
 
 new entry "MageSlayer_BreakConcentration"
