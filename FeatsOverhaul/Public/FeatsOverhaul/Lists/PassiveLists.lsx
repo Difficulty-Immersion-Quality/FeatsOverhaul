@@ -71,7 +71,7 @@
         </node>
         <node id="PassiveList">
             <attribute id="Name" type="FixedString" value="WeaponMaster_FightingStyle" />
-            <attribute id="Passives" type="LSString" value="FightingStyle_Archery,FightingStyle_Dueling,FightingStyle_GreatWeaponFighting,FightingStyle_TwoWeaponFighting" />
+            <attribute id="Passives" type="LSString" value="FightingStyle_Archery,UA_FightingStyle_CloseQuartersShooter,FightingStyle_Dueling,FightingStyle_GreatWeaponFighting,UA_FightingStyle_ThrownWeaponFighting,FightingStyle_TwoWeaponFighting" />
             <attribute id="UUID" type="guid" value="b79c7f4a-76ee-4603-a05a-e3a444972174" />
         </node>
       </children>
