@@ -10,6 +10,21 @@ data "PriorityOrder" "1"
 data "Properties" "Highlighted"
 data "Boosts" "IF(IsReactionAttack(context.Source)):Disadvantage(AttackTarget)"
 
+// Bug fix for vanilla status which is no longer used by the mod's version of Mobile, but might as well add here
+new entry "MOBILE_NO_AOO"
+type "StatusData"
+data "StatusType" "BOOST"
+using "MOBILE_NO_AOO"
+// // Sluggardly
+// data "DisplayName" "h76646995gdd8eg49d9g9f2fgf21672ef959a;2"
+// // Can't make an <LSTag Tooltip="OpportunityAttack">Opportunity Attack</LSTag> against its most recent attacker.
+// data "Description" "h9317a7ddg9f80g441fg9c9dg28472c5d6fba;2"
+// data "Icon" "statIcons_MobileFoe"
+// data "StackId" "MOBILE_NO_AOO"
+// data "TickType" "EndTurn"
+// data "StatusPropertyFlags" ""
+data "StatusPropertyFlags" "TickingWithSource"
+
 // =================================== Mobile: Evade Difficult Terrain ===================================
 // Now prevents your movement speed from being reduced by any effect (previously made you immune to Difficult Terrain after using Dash)
 
