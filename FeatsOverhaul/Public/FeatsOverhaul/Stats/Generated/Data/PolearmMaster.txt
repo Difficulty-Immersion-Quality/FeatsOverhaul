@@ -30,13 +30,29 @@ data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableComb
 new entry "Interrupt_PolearmMaster"
 type "InterruptData"
 using "Interrupt_PolearmMaster"
+// Polearm Master: Opportunity Attack
+// data "DisplayName" "hbc71d36cgf470g41d4gad2cg9876b1b8b06a;1"
 data "DisplayName" "hb66859e8gd45bg8e13g9dfbg9bfcfe2d2f53;1"
+// Make an <LSTag Tooltip="OpportunityAttack">Opportunity Attack</LSTag> whenever a creature enters your reach.
+// data "Description" "hb9c219feg8ecdg403cgb3bbg793ca7feef70;3"
 data "Description" "hd86fb36cg83fag3ae1ge0a7gf9366ff6bc89;1"
+// Prerequisite: Must be wielding a glaive, halberd, quarterstaff, or spear.
+// data "ExtraDescription" "h92b56851gffa7g41f4ga3abg76330e742626;1"
 data "ExtraDescription" "h7a70afc8gb481gba1aga700g724ef7d0a458;1"
+// data "Icon" "PassiveFeature_PolearmMaster_AttackOfOpportunity"
+// data "InterruptContext" "OnEnterAttackRange"
+// data "InterruptContextScope" "Self"
+// data "Container" "YesNoDecision"
 // data "Conditions" "Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and (HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true))) and Enemy() and not WieldingWeapon('Ammunition', false, false, context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')  and not HasStatus('GNOLL_SUDDENRUSH')) and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING',context.Target) and not HasStatus('SG_Ignore_AOO',context.Target) and not AnyEntityIsItem()"
-data "Conditions" "(Player(context.Observer) or not HasStatus('SG_Invisible',context.Observer)) and Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and (HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source)) or Goon_IsPolearm(GetActiveWeapon(context.Source, false))) and Enemy() and not WieldingWeapon('Ammunition', false, false, context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')  and not HasStatus('GNOLL_SUDDENRUSH')) and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING',context.Target) and not HasStatus('SG_Ignore_AOO',context.Target) and not AnyEntityIsItem() and not HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) and not (HasStatus('FANCYFOOTWORK', context.Source,context.Target) and HasStatus('FANCYFOOTWORK_OWNER', context.Target)) and not (HasStatus('PANACHE', context.Source) and HasStatus('PANACHE_OWNER', context.Target)) and not HasStatus('DISENGAGE', context.Target) and not HasStatus('SG_Invisible', context.Target)"
+data "Conditions" "(Player(context.Observer) or not HasStatus('SG_Invisible', context.Observer)) and Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and (HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source)) or Goon_IsPolearm(GetActiveWeapon(context.Source, false))) and Enemy() and not WieldingWeapon('Ammunition', false, false, context.Source) and not HasStatus('SG_Incapacitated', context.Source) and not HasStatus('SG_Unconscious', context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')) and not HasStatus('GNOLL_SUDDENRUSH') and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING', context.Target) and not HasStatus('SG_Ignore_AOO', context.Target) and not AnyEntityIsItem() and not HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) and not (HasStatus('FANCYFOOTWORK', context.Source, context.Target) and HasStatus('FANCYFOOTWORK_OWNER', context.Target)) and (not HasStatus('PANACHE', context.Source)) or (HasStatus('PANACHE', context.Source) and HasStatus('PANACHE_OWNER', context.Target)) and (not HasStatus('SG_Invisible', context.Target) or Goon_CanSeeInvisible())"
+// data "Properties" "IF(not HasPassive('Sentinel_ZeroSpeed',context.Source)):UseAttack();IF(HasPassive('Sentinel_ZeroSpeed',context.Source)):UseSpell(Target_Sentinel_AttackOfOpportunity,true,true,true)"
+// data "Cost" "ReactionActionPoint:1"
+// data "Stack" "AttackOfOpportunity"
+// data "InterruptDefaultValue" "Ask;Enabled"
 // data "EnableCondition" "not HasAnyStatus({'SG_Polymorph','SG_Blinded'}) or HasAnyStatus({'SG_Disguise','WILDSHAPE_STARRY_ARCHER_PLAYER','WILDSHAPE_STARRY_CHALICE_PLAYER','WILDSHAPE_STARRY_DRAGON_PLAYER'});"
 data "EnableCondition" "(not HasStatus('SG_Polymorph') or Goon_IsUnrestrictedPolymorphStatus()) and not HasStatus('SG_Blinded')"
+// data "EnableContext" "OnStatusApplied;OnStatusRemoved"
+data "InterruptFlags" "InterruptWhileInvisible"
 
 // =================================== Polearm Master: Bonus Attack ===================================
 // Also add tridents and javelins, and include pikes in description. Passive is now highlighted
