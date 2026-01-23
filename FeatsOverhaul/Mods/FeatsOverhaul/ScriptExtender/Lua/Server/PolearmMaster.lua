@@ -22,9 +22,9 @@ Ext.Osiris.RegisterListener("Unequipped", 2, "after", function(item, character)
     end
     -- Listening for when an off-hand melee slot is unequipped when the character has the PAM feat and their main-hand weapon is eligible for the Reach status
     if Osi.GetEquipmentSlotForItem(item) == 4 then
-        local weapon = Osi.GetEquippedItem(character, "Melee Main Weapon")
-        if Osi.HasPassive(character, "PolearmMaster_AttackOfOpportunity") == 1 and IsPolearm(weapon) and IsVersatile(weapon) then
-            Osi.ApplyStatus(weapon, "CHT_REACH_OVERWRITE", -1, 0, character)
+        local MainHandWeapon = Osi.GetEquippedItem(character, "Melee Main Weapon")
+        if MainHandWeapon and Osi.HasPassive(character, "PolearmMaster_AttackOfOpportunity") == 1 and IsPolearm(MainHandWeapon) and IsVersatile(MainHandWeapon) then
+            Osi.ApplyStatus(MainHandWeapon, "CHT_REACH_OVERWRITE", -1, 0, character)
         end
     end
 end)
@@ -36,9 +36,9 @@ Ext.Osiris.RegisterListener("Equipped", 2, "after", function(item, character)
     end
     -- Listening for when an off-hand melee slot is equipped on a character who already has a weapon with the CHT_REACH_OVERWRITE status active
     if Osi.GetEquipmentSlotForItem(item) == 4 then 
-        local weapon = Osi.GetEquippedItem(character, "Melee Main Weapon")
-        if Osi.HasActiveStatus(weapon, "CHT_REACH_OVERWRITE") then
-            Osi.RemoveStatus(weapon, "CHT_REACH_OVERWRITE")
+        local MainHandWeapon = Osi.GetEquippedItem(character, "Melee Main Weapon")
+        if Osi.HasActiveStatus(MainHandWeapon, "CHT_REACH_OVERWRITE") then
+            Osi.RemoveStatus(MainHandWeapon, "CHT_REACH_OVERWRITE")
         end
     end
 end)
