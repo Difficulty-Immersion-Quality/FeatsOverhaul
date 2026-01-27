@@ -3,7 +3,7 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "WeaponPropertyTracker", {})
 -- Apply any changes to weapon properties (i.e. Versatile being removed) on session load, as changes to weapon properties would otherwise by overwritten by the weapon's stats entry
 local function initializeweaponProperties()
     ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
-    if next(ModVars) ~= nil then
+    if (next(ModVars) ~= nil) then
         -- Apply stored weapon properties
         for uuid, property in pairs(ModVars) do
             local entity = Ext.Entity.Get(uuid)
@@ -96,7 +96,7 @@ end
 -- Listening for the remove Versatile status being applied to the weapon
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(weapon, status, _, _)
     local weaponEntity = Ext.Entity.Get(weapon)
-    if status == "CHT_DUELIST_REMOVED_VERSATILE" then
+    if (status == "CHT_DUELIST_REMOVED_VERSATILE") then
         removeVersatile(weaponEntity)
     end
 end)
@@ -104,7 +104,7 @@ end)
 -- Listening for the remove Versatile status being removed from the weapon (not listening for the restore Versatile helper status being applied, to also catch long rests which remove the main status but don't apply that helper status)
 Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(weapon, status, _, _)
     local weaponEntity = Ext.Entity.Get(weapon)
-    if status == "CHT_DUELIST_REMOVED_VERSATILE" then
+    if (status == "CHT_DUELIST_REMOVED_VERSATILE") then
         restoreVersatile(weaponEntity)
     end
 end)
