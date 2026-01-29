@@ -1,3 +1,18 @@
+// =================================== Mobile ===================================
+// Bug Fix: Passive now visible on the character sheet.
+
+new entry "Mobile_PassiveBonuses"
+type "PassiveData"
+using "Mobile_PassiveBonuses"
+// // Mobile
+// data "DisplayName" "h0c538acfgb124g4607ga1e1gd0fbf858788e;2"
+// // Your <LSTag Tooltip="MovementSpeed">movement speed</LSTag> increases by [1].
+// data "Description" "h3b532c4dg43beg476egb187g3cb1d1a2cb7c;3"
+// data "DescriptionParams" "Distance(3)"
+// data "Icon" "Action_Dash"
+data "Properties" "Highlighted"
+// data "Boosts" "ActionResource(Movement,3,0)"
+
 // =================================== Mobile: Evade Opportunity Attack ===================================
 // Now gives disadvantage to all opportunity attacks against you (previously caused you to not provoke an opportunity attack against a target you make a melee attack against)
 

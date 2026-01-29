@@ -11,14 +11,17 @@
 // data "Boosts" "Advantage(Concentration)"
 
 // =================================== War Caster: Opportunity Spell ===================================
+// Bug Fix: Passive now visible on the character sheet.
 
-// new entry "WarCaster_OpportunitySpell"
-// type "PassiveData"
+new entry "WarCaster_OpportunitySpell"
+type "PassiveData"
+using "WarCaster_OpportunitySpell"
 // // War Caster: Opportunity Spell
 // data "DisplayName" "hd7ac736fg6e54g4383gb286g3a7b3014617a;2"
 // // You can use a <LSTag Type="ActionResource" Tooltip="ReactionActionPoint">reaction</LSTag> to cast <LSTag Type="Spell" Tooltip="Target_ShockingGrasp">Shocking Grasp</LSTag> at a target moving out of melee range.
 // data "Description" "h85846355g2916g44b3g9067g1e089037591f;3"
 // data "Icon" "PassiveFeature_WarCaster_OpportunitySpell"
+data "Properties" "Highlighted"
 // data "Boosts" "UnlockInterrupt(Interrupt_WarCaster)"
 
 // Can be used while under the effects of more non-hostile and non-spellcasting restricted Polymorphs, and can also be used while invisible
