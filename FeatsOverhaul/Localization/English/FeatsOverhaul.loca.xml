@@ -228,17 +228,19 @@
 	
 	<!-- Polearm Master -->
 	<content contentuid="h53f028e5gde00g4c9fg66f6g4d8fcdeb6d66" version="1">Polearm Master</content>
-	<content contentuid="h2fcb90c9gbb68gec1ag5c27ge6480634e955" version="1">When attacking with a glaive, halberd, pike, quarterstaff, spear, javelin, or trident, you can use a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;bonus action&lt;/LSTag&gt; to attack with the butt of your weapon.&lt;br&gt;&lt;br&gt;You can also make an &lt;LSTag Tooltip="OpportunityAttack"&gt;Opportunity Attack&lt;/LSTag&gt; when a target comes within range.&lt;br&gt;&lt;br&gt;When wielding a glaive, halberd, pike, quarterstaff, spear, javelin, or trident with both hands that has the &lt;LSTag Tooltip="Versatile"&gt;Versatile&lt;/LSTag&gt; property but not the &lt;LSTag Tooltip="Reach"&gt;Reach Weapon&lt;/LSTag&gt; property, it gains the Reach property.</content>
+	<content contentuid="h2fcb90c9gbb68gec1ag5c27ge6480634e955" version="1">When attacking with a glaive, halberd, pike, quarterstaff, spear, javelin, or trident, you can use a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;bonus action&lt;/LSTag&gt; to attack with the butt of your weapon.&lt;br&gt;&lt;br&gt;You can also make an &lt;LSTag Tooltip="OpportunityAttack"&gt;Opportunity Attack&lt;/LSTag&gt; when a target comes within range.&lt;br&gt;&lt;br&gt;When wielding a quarterstaff, spear, or trident with both hands, and the weapon has the &lt;LSTag Tooltip="Versatile"&gt;Versatile&lt;/LSTag&gt; property but not the &lt;LSTag Tooltip="Reach"&gt;Reach&lt;/LSTag&gt; property, it gains the Reach property.</content>
 	<content contentuid="hcd723e04gc2fage95ag8f7fg103cea0319e5" version="1">Polearm Clout</content>
 	<content contentuid="h2cdd9089gf05ag635bgf7c9g903c96bd869f" version="1">Sweep your polearm around, whacking a foe with the weapon's heavy haft.</content>
 	<content contentuid="hb66859e8gd45bg8e13g9dfbg9bfcfe2d2f53" version="1">Polearm Master: Opportunity Attack</content>
 	<content contentuid="hd86fb36cg83fag3ae1ge0a7gf9366ff6bc89" version="1">Make an &lt;LSTag Tooltip="OpportunityAttack"&gt;Opportunity Attack&lt;/LSTag&gt; whenever a creature enters your reach.</content>
 	<content contentuid="h7a70afc8gb481gba1aga700g724ef7d0a458" version="1">Prerequisite: Must be wielding a glaive, halberd, pike, quarterstaff, spear, javelin, or trident.</content>
 	<content contentuid="h6b81fdc6gdc6egec70g7f25gf2cbec87fff8" version="1">Polearm Master: Opportunity Attack</content>
-	<content contentuid="h697b2cf3g279aga146ge50ag1d967a742c8d" version="1">When wielding a glaive, halberd, pike, quarterstaff, spear, or trident, you can make an &lt;LSTag Tooltip="OpportunityAttack"&gt;Opportunity Attack&lt;/LSTag&gt; when a target comes within range. When wielding an aforementioned weapon type with both hands that has the &lt;LSTag Tooltip="Versatile"&gt;Versatile&lt;/LSTag&gt; property but not the &lt;LSTag Tooltip="Reach"&gt;Reach Weapon&lt;/LSTag&gt; property, it gains the Reach property.</content>
+	<content contentuid="h697b2cf3g279aga146ge50ag1d967a742c8d" version="1">When wielding a glaive, halberd, pike, quarterstaff, spear, or trident, you can make an &lt;LSTag Tooltip="OpportunityAttack"&gt;Opportunity Attack&lt;/LSTag&gt; when a target comes within range.</content>
 	<content contentuid="h373122d1g38ceg802ag719egbfa84a2cb266" version="1">Polearm Master: Bonus Attack</content>
 	<content contentuid="h86eac956g2d43g4d6fg23cbg701bb67a7e8d" version="1">When attacking with a glaive, halberd, pike, quarterstaff, spear, javelin, or trident, you can use a bonus action to attack with the butt of your weapon and deal [1].</content>
-	
+	<content contentuid="he52e426cg26b5g4aadgaf99gc0642aa664d7" version="1">Polearm Master: Reach Weapon</content>
+	<content contentuid="he7c2fcafg03c2g4cdcga1edgb8ab8f7e6f1e" version="1">When wielding a quarterstaff, spear, or trident with both hands, and the weapon has the &lt;LSTag Tooltip="Versatile"&gt;Versatile&lt;/LSTag&gt; property but not the &lt;LSTag Tooltip="Reach"&gt;Reach&lt;/LSTag&gt; property, it gains the Reach property.</content>
+
 	<!-- Resilient -->
 	<content contentuid="hb4654d0fgcf09g421bgbc7fg5f985b212190" version="1">Resilient</content>
 	<content contentuid="h6564e8f5g2b64g4cddgbc79g706a0ef93a4e" version="1">You increase an &lt;LSTag Tooltip="Abilities"&gt;Ability&lt;/LSTag&gt; by 1 and gain &lt;LSTag Tooltip="Proficiency"&gt;Proficiency&lt;/LSTag&gt; in that Ability's &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt;.</content>

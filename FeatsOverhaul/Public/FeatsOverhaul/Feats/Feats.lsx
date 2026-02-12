@@ -130,6 +130,11 @@
                     <attribute id="UUID" type="guid" value="60dfd716-3ba8-4611-90ee-018b59775b1d"/>
                 </node>
                 <node id="Feat">
+                    <attribute id="Name" type="FixedString" value="PolearmMaster" />
+                    <attribute id="PassivesAdded" type="LSString" value="PolearmMaster_AttackOfOpportunity;PolearmMaster_BonusAttack;CHT_PolearmMaster_Reach" />
+                    <attribute id="UUID" type="guid" value="fdf0be80-cc1e-4501-bd2e-7a1ea737362c" />
+                </node>
+                <node id="Feat">
                     <attribute id="CanBeTakenMultipleTimes" type="bool" value="true"/>
                     <attribute id="Name" type="FixedString" value="Resilient" />
                     <attribute id="Selectors" type="LSString" value="SelectPassives(d4b799b4-30e2-412b-b2c9-abb144df8e7d,1)" />

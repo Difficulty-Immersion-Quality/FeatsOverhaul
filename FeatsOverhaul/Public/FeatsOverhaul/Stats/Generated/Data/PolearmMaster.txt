@@ -1,5 +1,5 @@
 // =================================== Polearm Master: Opportunity Attack ===================================
-// Add tridents and javelins, correct description to include pikes (which were always included but not mentioned), and dynamically give non-Reach polearms the Reach property when they are equipped with both hands. Passive is now highlighted
+// Add tridents and javelins, correct description to include pikes (which were always included but not mentioned). Passive is now highlighted
 
 new entry "PolearmMaster_AttackOfOpportunity"
 type "PassiveData"
@@ -7,24 +7,7 @@ data "DisplayName" "h6b81fdc6gdc6egec70g7f25gf2cbec87fff8;1"
 data "Description" "h697b2cf3g279aga146ge50ag1d967a742c8d;1"
 data "Icon" "PassiveFeature_PolearmMaster_AttackOfOpportunity"
 data "Boosts" "UnlockInterrupt(Interrupt_PolearmMaster)"
-data "StatsFunctorContext" "OnCreate;OnEquip;OnTurn"
-data "StatsFunctors" "IF(CHT_PolearmMasterCheck(context.Source) and not HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source, true)) and Goon_IsPolearm(GetActiveWeapon(context.Source, false))):ApplyEquipmentStatus(SELF,MeleeMainHand,CHT_REACH_OVERWRITE,100,-1);IF(not CHT_PolearmMasterCheck(context.Source) and HasStatus('CHT_REACH_OVERWRITE',GetActiveWeapon(context.Source, true))):ApplyEquipmentStatus(SELF,MeleeMainHand,CHT_REACH_OVERWRITE_CLEANER,100,0)"
 data "Properties" "Highlighted"
-
-new entry "CHT_REACH_OVERWRITE"
-type "StatusData"
-data "StatusType" "BOOST"
-data "Icon" "PassiveFeature_PolearmMaster_AttackOfOpportunity"
-data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog;IgnoreResting"
-data "StackId" "CHT_REACH_OVERWRITE"
-data "Boosts" "WeaponProperty(Reach)"
-data "RemoveEvents" "OnStatusApplied"
-data "RemoveConditions" "StatusId('CHT_REACH_OVERWRITE_CLEANER')"
-
-new entry "CHT_REACH_OVERWRITE_CLEANER"
-type "StatusData"
-data "StatusType" "BOOST"
-data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog;IgnoreResting"
 
 // Allow interrupt to work if disguised. Also no longer triggers if target if invisible or is under the effects of Disengage, Panache, or Fancy Footwork
 // Bug Fix: Gnoll's Sudden Rush is properly implementated in the conditions, preventing Opportunity Atacks against them.
@@ -32,6 +15,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableComb
 // Changes: Invisible creatures can be attacked if the entity reacting can see through invisibility.
 // Changes: Player characters can now break Sanctuary with an Opportunity Attack.
 // + more
+// Note: can't use Goon_IsPolearm() in the Conditions field because it doesn't work for some reason, so just using Tagged() for all eligible weapon types
 new entry "Interrupt_PolearmMaster"
 type "InterruptData"
 using "Interrupt_PolearmMaster"
@@ -49,7 +33,7 @@ data "ExtraDescription" "h7a70afc8gb481gba1aga700g724ef7d0a458;1"
 // data "InterruptContextScope" "Self"
 // data "Container" "YesNoDecision"
 // data "Conditions" "Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and (HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true))) and Enemy() and not WieldingWeapon('Ammunition', false, false, context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')  and not HasStatus('GNOLL_SUDDENRUSH')) and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING',context.Target) and not HasStatus('SG_Ignore_AOO',context.Target) and not AnyEntityIsItem()"
-data "Conditions" "(Player(context.Observer) or not HasStatus('SG_Invisible', context.Observer)) and Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and (HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source)) or Goon_IsPolearm(GetActiveWeapon(context.Source, false))) and Enemy() and (Player(context.Source) or not HasStatus('SANCTUARY', context.Source)) and not WieldingWeapon('Ammunition', false, false, context.Source) and not HasStatus('SG_Incapacitated', context.Source) and not HasStatus('SG_Unconscious', context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')) and not HasStatus('GNOLL_SUDDENRUSH') and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING', context.Target) and not HasStatus('SG_Ignore_AOO', context.Target) and not AnyEntityIsItem() and not HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) and not (HasStatus('FANCYFOOTWORK', context.Source, context.Target) and HasStatus('FANCYFOOTWORK_OWNER', context.Target)) and (not HasStatus('PANACHE', context.Source)) or (HasStatus('PANACHE', context.Source) and HasStatus('PANACHE_OWNER', context.Target)) and (not HasStatus('SG_Invisible', context.Target) or Goon_CanSeeInvisible())"
+data "Conditions" "(Player(context.Observer) or not HasStatus('SG_Invisible', context.Observer)) and Self(context.Source,context.Observer) and IsAbleToReact(context.Observer) and Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)) and Enemy()"
 // data "Properties" "IF(not HasPassive('Sentinel_ZeroSpeed',context.Source)):UseAttack();IF(HasPassive('Sentinel_ZeroSpeed',context.Source)):UseSpell(Target_Sentinel_AttackOfOpportunity,true,true,true)"
 // data "Cost" "ReactionActionPoint:1"
 // data "Stack" "AttackOfOpportunity"
@@ -99,3 +83,30 @@ data "Description" "h2cdd9089gf05ag635bgf7c9g903c96bd869f;1"
 data "DescriptionParams" "DealDamage(1d4+max(DexterityModifier,StrengthModifier), Bludgeoning)"
 // data "TooltipDamageList" "DealDamage(1d4+max(DexterityModifier,StrengthModifier), Bludgeoning)"
 data "TooltipDamageList" "DealDamage(1d4+max(DexterityModifier,StrengthModifier), Bludgeoning)"
+
+// =================================== Polearm Master: Reach Weapon ===================================
+// New passive: dynamically give non-Reach polearms the Reach property when they are equipped with both hands
+
+new entry "CHT_PolearmMaster_Reach"
+type "PassiveData"
+data "DisplayName" "he52e426cg26b5g4aadgaf99gc0642aa664d7;1"
+data "Description" "he7c2fcafg03c2g4cdcga1edgb8ab8f7e6f1e;1"
+data "Icon" "PassiveFeature_WarGodsBlessing"
+data "StatsFunctorContext" "OnCreate;OnEquip;OnTurn"
+data "StatsFunctors" "IF(CHT_PolearmMasterCheck(context.Source) and not HasWeaponProperty(WeaponProperties.Reach, GetActiveWeapon(context.Source, true)) and Goon_IsPolearm(GetActiveWeapon(context.Source, true))):ApplyEquipmentStatus(SELF,MeleeMainHand,CHT_REACH_OVERWRITE,100,-1);IF(not CHT_PolearmMasterCheck(context.Source) and HasStatus('CHT_REACH_OVERWRITE',GetActiveWeapon(context.Source, true))):ApplyEquipmentStatus(SELF,MeleeMainHand,CHT_REACH_OVERWRITE_CLEANER,100,0)"
+data "Properties" "Highlighted"
+
+new entry "CHT_REACH_OVERWRITE"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Icon" "PassiveFeature_WarGodsBlessing"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog;IgnoreResting"
+data "StackId" "CHT_REACH_OVERWRITE"
+data "Boosts" "WeaponProperty(Reach)"
+data "RemoveEvents" "OnStatusApplied"
+data "RemoveConditions" "StatusId('CHT_REACH_OVERWRITE_CLEANER')"
+
+new entry "CHT_REACH_OVERWRITE_CLEANER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog;IgnoreResting"
