@@ -1,5 +1,5 @@
 // =================================== Martial Adept ===================================
-// Gives 3 Superiority Die now (previously 1)
+// Gives 2 Superiority Die now (previously 1)
 
 new entry "MartialAdept"
 type "PassiveData"
@@ -7,7 +7,7 @@ data "DisplayName" "h5264a040g03c1g4591g94deg5d904d458f3a;1"
 data "Description" "haebba60ag30c6g4d24gbc89g666d6fa34eb5;1"
 data "Icon" "PassiveFeature_MartialAdept"
 data "Properties" "Highlighted"
-data "Boosts" "ActionResource(SuperiorityDie,3,0)"
+data "Boosts" "ActionResource(SuperiorityDie,2,0)"
 
 // =================================== Ability score improvements through passives ===================================
 
