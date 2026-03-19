@@ -1,5 +1,5 @@
 // =================================== Tough ===================================
-// Now gives +2 bonus to Constitution saving throws
+// Now gives +1 Constitution and a +2 bonus to Constitution saving throws
 
 new entry "Tough"
 type "PassiveData"
