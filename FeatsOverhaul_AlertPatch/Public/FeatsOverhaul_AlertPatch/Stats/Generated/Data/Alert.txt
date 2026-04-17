@@ -1,0 +1,13 @@
+// ==================================== Alert ====================================
+// Overwrite with vanilla version
+
+new entry "Alert"
+type "PassiveData"
+// Alert
+data "DisplayName" "hcccd66efg761eg427cg9121g37cf43267b0f;2"
+// You gain a +[1] bonus to Initiative and can't be <LSTag Type="Status" Tooltip="SURPRISED">Surprised</LSTag>.
+data "Description" "h4bccaad4gb27bg4547gb506g16f35e47b130;5"
+data "DescriptionParams" "5"
+data "Icon" "PassiveFeature_Generic_Threat"
+data "Properties" "Highlighted"
+data "Boosts" "Initiative(5);StatusImmunity(SURPRISED)"
