@@ -1,0 +1,19 @@
+new entry "DurableRAW"
+type "PassiveData"
+using "DurableRAW"
+// Durable
+// data "DisplayName" "he728a1632c804292be0a0a531aae60b47e7f;1"
+// When you roll a Hit Die to regain &lt;LSTag Tooltip="HitPoints"&gt;hit points&lt;/LSTag&gt;, the minimum number of hit points you regain from the roll equals twice your Constitution &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; (minimum of 2). Your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; score is increased by 1, to a maximum of 20.
+// data "Description" "hbca80ccc68864f14b2f5bc50c56f8174b1e7;1"
+// In combat, if you start your turn with less than 60% &lt;LSTag Tooltip="HitPoints"&gt;hit points&lt;/LSTag&gt;, you regain hit points equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt; plus your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt;. When you roll a Hit Die to regain hit points, the minimum number of hit points you regain from the roll equals twice your Constitution &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; (minimum of 2). Your &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; score is increased by 1.
+data "Description" "h9e62caedg7509g466fg8de7ga966c3bf4b4b;1"
+// data "Icon" "PassiveFeature_Durable"
+// data "Properties" "Highlighted"
+// data "Boosts" "Ability(Constitution,1,20)"
+data "Boosts" "Ability(Constitution, 1)"
+// data "StatsFunctorContext" ""
+data "StatsFunctorContext" "OnTurn"
+// data "Conditions" ""
+data "Conditions" "Combat() and not IsDowned()"
+// data "StatsFunctors" ""
+data "StatsFunctors" "IF(HasHPPercentageEqualOrLessThan(60)):RegainHitPoints(ProficiencyBonus+ConstitutionModifier)"
