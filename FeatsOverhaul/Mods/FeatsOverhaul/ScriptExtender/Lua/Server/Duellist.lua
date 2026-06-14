@@ -5,16 +5,16 @@ local function initializeweaponProperties()
     ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
     if (next(ModVars) ~= nil) then
         -- Apply stored weapon properties
-        for uuid, property in pairs(ModVars) do
+        for uuid, data in pairs(ModVars) do
             local entity = Ext.Entity.Get(uuid)
-            entity.Weapon.WeaponProperties = property
+            entity.Weapon.WeaponProperties = data.WeaponProperties
         end
         -- -- Debugging (note: can't get display name since getNameFromGuid() uses Osiris calls but those are apparently not available on SessionLoaded))
         -- _P(string.format("[FeatsOverhaul] [initializeweaponProperties()] ModVars Dump =>"))
-        -- for uuid, property in pairs(ModVars) do
+        -- for uuid, data in pairs(ModVars) do
         --     local entity = Ext.Entity.Get(uuid)
-        --     _P(string.format("| Stored UUID: '%s' | Stored Weapon Properties: '%s'",
-        --         uuid, property))
+        --     _P(string.format("| Stored UUID: '%s' | Stored Weapon Properties: '%s' | Stored Wielder: '%s'",
+        --         uuid, data.WeaponProperties, tostring(data.Wielder)))
         -- end
     end
 end
@@ -31,8 +31,12 @@ local function removeVersatile(weapon)
     weapon.Weapon.WeaponProperties = weaponProperties_New
     -- Stores the new properties to the weapon entity in the mod variable
     local entityUUID = weapon.Uuid["EntityUuid"]
+    local wielderUUID = GetInventoryOwner(weapon.Uuid.EntityUuid)
     local ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
-    ModVars[entityUUID] = weaponProperties_New
+    ModVars[entityUUID] = {
+        WeaponProperties = weaponProperties_New,
+        Wielder = wielderUUID
+    }
     Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker = ModVars
     -- Replicate the Weapon component after changing properties
     weapon:Replicate("Weapon")
@@ -42,10 +46,10 @@ local function removeVersatile(weapon)
     -- _P(string.format("| Weapon: '%s' ('%s')", displayName, entityUUID))
     -- _P(string.format("| Old Weapon Properties: '%s'", weaponProperties))
     -- _P(string.format("| New Weapon Properties: '%s'", weaponProperties_New))
-    -- _P(string.format("| ModVars After RemoveVersatile()"))
-    -- for uuid, property in pairs(ModVars) do
-    --     _P(string.format("| -> Weapon: '%s' | UUID: '%s' | Stored Properties: '%s'", getNameFromGuid(uuid), uuid,
-    --         property))
+    -- _P(string.format("| ModVars After removeVersatile()"))
+    -- for uuid, data in pairs(ModVars) do
+    --     _P(string.format("| -> Weapon: '%s' | UUID: '%s' | Stored Properties: '%s' | Stored Wielder: '%s'", 
+    --     getNameFromGuid(uuid), uuid, data.WeaponProperties, tostring(data.Wielder)))
     -- end
 end
 
@@ -66,7 +70,6 @@ local function restoreVersatile(weapon)
             table[key] = nil
             return element
         end
-
         if uuid == entityUUID then
             table.removekey(ModVars, uuid)
             Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker = ModVars
@@ -80,31 +83,76 @@ local function restoreVersatile(weapon)
     -- _P(string.format("| Weapon: '%s' ('%s')", displayName, entityUUID))
     -- _P(string.format("| Old Weapon Properties: '%s'", weaponProperties))
     -- _P(string.format("| New Weapon Properties: '%s'", weaponProperties_New))
-    -- _P(string.format("| ModVars After RestoreVersatile()"))
+    -- _P(string.format("| ModVars After restoreVersatile()"))
     -- if next(ModVars) == nil then
     --     _P("| -> ModVars is empty")
     -- else
-    --     for uuid, property in pairs(ModVars) do
+    --     for uuid, data in pairs(ModVars) do
     --         _P(string.format(
-    --             "| -> Weapon: '%s' | UUID: '%s' | Stored Properties: '%s'",
-    --             getNameFromGuid(uuid), uuid, property
-    --         ))
+    --             "| -> Weapon: '%s' | UUID: '%s' | Stored Properties: '%s'", 
+    --             getNameFromGuid(uuid), uuid, data.WeaponProperties, tostring(data.Wielder)))
     --     end
     -- end
 end
 
--- Listening for the remove Versatile status being applied to the weapon
+-- Listening for statuses being applied to the weapon
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(weapon, status, _, _)
     local weaponEntity = Ext.Entity.Get(weapon)
-    if (status == "CHT_DUELIST_REMOVED_VERSATILE") then
+    if not weaponEntity or not weaponEntity.Weapon then
+        return
+    end
+    local entityUUID = weaponEntity.Uuid["EntityUuid"]
+    -- Normal functionality: CHT_DUELIST_REMOVED_VERSATILE status applied; remove the Versatile property
+    if status == "CHT_DUELIST_REMOVED_VERSATILE" then
         removeVersatile(weaponEntity)
+        return
+    end
+    -- Some other status restored Versatile while the CHT_DUELIST_REMOVED_VERSATILE status is still active, so re-remove Versatile
+    if Osi.HasActiveStatus(entityUUID, "CHT_DUELIST_REMOVED_VERSATILE") == 1 and (weaponEntity.Weapon.WeaponProperties & 2048) ~= 0 then
+        removeVersatile(weaponEntity)
+        -- -- Debugging
+        -- local displayName = getNameFromGuid(entityUUID)
+        -- _P(string.format(
+        --     "[FeatsOverhaul] Weapon: '%s' ('%s') had its Versatile property restored by status '%s'; removing Versatile again",
+        --     displayName, entityUUID, status))
     end
 end)
+
+-- Guard to prevent the StatusRemoved listener from being re-triggered when it directly removes the CHT_DUELIST_REMOVED_VERSATILE status
+local suppressRestore = {}
 
 -- Listening for the remove Versatile status being removed from the weapon (not listening for the restore Versatile helper status being applied, to also catch long rests which remove the main status but don't apply that helper status)
 Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(weapon, status, _, _)
     local weaponEntity = Ext.Entity.Get(weapon)
-    if (status == "CHT_DUELIST_REMOVED_VERSATILE") then
+    if not weaponEntity or not weaponEntity.Weapon then
+        return
+    end
+    local entityUUID = weaponEntity.Uuid["EntityUuid"]
+    local ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
+    -- Some other status restored Versatile while the CHT_DUELIST_REMOVED_VERSATILE status is still active, so remove CHT_DUELIST_REMOVED_VERSATILE
+    if status ~= "CHT_DUELIST_REMOVED_VERSATILE" ~= 0 and Osi.HasActiveStatus(entityUUID, "CHT_DUELIST_REMOVED_VERSATILE") == 1 and (weaponEntity.Weapon.WeaponProperties & 2048) then
+        -- Remove status from weapon and add weapon to the guard table to prevent the status removal from re-triggering this listener and triggering the restoreVersatile() function
+        suppressRestore[weapon] = true
+        Osi.RemoveStatus(weapon, "CHT_DUELIST_REMOVED_VERSATILE")
+        -- Remove status from character
+        local tracker = ModVars[entityUUID]
+        if tracker and tracker.Wielder then
+            Osi.RemoveStatus(tracker.Wielder,"CHT_DUELIST_REMOVED_VERSATILE_HELPER")
+        end
+        -- -- Debugging
+        -- local displayName = getNameFromGuid(entityUUID)
+        -- _P(string.format(
+        --     "[FeatsOverhaul] Weapon: '%s' ('%s') had its Versatile property restored by status '%s'; removing CHT_DUELIST_REMOVED_VERSATILE status",
+        --     displayName, entityUUID, status))
+        -- return
+    end
+    -- Normal functionality: CHT_DUELIST_REMOVED_VERSATILE status removed; restore the Versatile property
+    if status == "CHT_DUELIST_REMOVED_VERSATILE" then
+        -- Prevent the restoreVersatile() function from running if the Versatile property is removed via the IF statement earlier in this listener
+        if suppressRestore[weapon] then
+            suppressRestore[weapon] = nil
+            return
+        end
         restoreVersatile(weaponEntity)
     end
 end)
