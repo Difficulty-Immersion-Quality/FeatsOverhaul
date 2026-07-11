@@ -114,6 +114,17 @@ function StatusDoesNotInvokeOnStatusApply()
 	| StatusId('ATT_TIMESTOP_HELPER')
 end
 
+function CHT_DDIsFlatValueInterruptInteresting(max, entity)
+    local entity = entity or context.Target
+    local max = max or 0
+    if context.InterruptedRoll.RollCritical ~= RollCritical.None then
+        return ConditionResult(false, {ConditionError("IsCriticalFailSuccess")})
+    end
+    
+    local rollSuccess = context.InterruptedRoll.Total >= context.InterruptedRoll.Difficulty
+    local result = rollSuccess and ((context.InterruptedRoll.Total - context.InterruptedRoll.Difficulty) < max)
+    return ConditionResult(result)
+end
 
 function CHT_IsFinesseWeapon(entity)
     entity = entity or context.AttackWeapon
