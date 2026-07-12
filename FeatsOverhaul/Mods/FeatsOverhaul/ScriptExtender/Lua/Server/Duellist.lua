@@ -7,7 +7,9 @@ local function initializeweaponProperties()
         -- Apply stored weapon properties
         for uuid, data in pairs(ModVars) do
             local entity = Ext.Entity.Get(uuid)
-            entity.Weapon.WeaponProperties = data.WeaponProperties
+            if entity and entity.Weapon then
+                entity.Weapon.WeaponProperties = data.WeaponProperties
+            end
         end
         -- -- Debugging (note: can't get display name since getNameFromGuid() uses Osiris calls but those are apparently not available on SessionLoaded))
         -- _P(string.format("[FeatsOverhaul] [initializeweaponProperties()] ModVars Dump =>"))
