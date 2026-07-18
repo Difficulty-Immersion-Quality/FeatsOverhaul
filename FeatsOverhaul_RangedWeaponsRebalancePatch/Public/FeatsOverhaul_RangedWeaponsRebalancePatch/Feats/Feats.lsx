@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="8" revision="0" build="500"/>
+    <region id="Feats">
+        <node id="root">
+            <children>
+                <node id="Feat">
+                    <attribute id="Name" type="FixedString" value="BowExpert"/>
+                    <attribute id="PassivesAdded" type="LSString" value="CrossbowExpert_PointBlank;CrossbowExpert_Wounding;CrossbowExpert_FastReload;CrossbowExpert_Proficiency;BowExpert_Dexterity"/>
+                    <attribute id="UUID" type="guid" value="94a78b4c-a8f2-404f-8cdc-2d454c13cb97"/>
+                </node>
+            </children>
+        </node>
+    </region>
+</save>

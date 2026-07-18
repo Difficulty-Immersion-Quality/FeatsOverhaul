@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentList>
+	<content contentuid="h00904b9fg3924gd523g5186gc2ac05c309b2" version="1">Bow Expert</content>
+	<content contentuid="hd72ec37ag683cg44ddga571g0e8f32238238" version="6">Your &lt;LSTag Tooltip="Dexterity"&gt;Dexterity&lt;/LSTag&gt; increases by 1. You gain &lt;LSTag Tooltip="Proficiency"&gt;Proficiency&lt;/LSTag&gt; with all bow types and also remove the once per turn limitation when attacking with crossbows.&lt;br&gt;&lt;br&gt;When you make bow attacks within melee range, the &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt; do not have &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt;.&lt;br&gt;&lt;br&gt;&lt;LSTag Type="Spell" Tooltip="Projectile_PiercingShot"&gt;Piercing Shot&lt;/LSTag&gt; and &lt;LSTag Type="Spell" Tooltip="Projectile_HamstringShot"&gt;Hamstring Shot&lt;/LSTag&gt; are harder for targets to resist and inflict their conditions for twice as long.</content>
+</contentList>
