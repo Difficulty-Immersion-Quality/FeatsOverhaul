@@ -14,20 +14,21 @@
 new entry "Interrupt_Sentinel"
 type "InterruptData"
 using "Interrupt_Sentinel"
-// Sentinel
+// // Sentinel
 // data "DisplayName" "h81cd2db2gb571g4397g806dg178adf362411;1"
-// When an ally is attacked by a nearby creature, you may strike the attacker.
+// // When an ally is attacked by a nearby creature, you may strike the attacker.
 // data "Description" "hcecec268gab67g410cg88d4g7d2241a98bb2;1"
 // data "Icon" "PassiveFeature_Sentinel_Attack"
 // data "InterruptContext" "OnCastHit"
 // data "InterruptContextScope" "Nearby"
 // data "Container" "YesNoDecision"
 // data "Conditions" "not Self(context.Target,context.Observer) and not Self(context.Source,context.Observer) and Ally(context.Target, context.Observer) and Enemy(context.Source, context.Observer) and not HasPassive('Sentinel_Attack',context.Target) and IsAbleToReact(context.Observer) and IsMeleeAttack() and not DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source) and not AnyEntityIsItem() and HasLastAttackTriggered()"
+data "Conditions" "Goon_BasicHarmfulInterruptConditions() and not Self(context.Target,context.Observer) and not Self(context.Source,context.Observer) and Ally(context.Target, context.Observer) and Enemy(context.Source, context.Observer) and not HasPassive('Sentinel_Attack',context.Target) and IsAbleToReact(context.Observer) and IsMeleeAttack() and not DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source) and not AnyEntityIsItem() and HasLastAttackTriggered()"
 // data "Properties" "UseAttack(OBSERVER_SOURCE)"
 // data "Cost" "ReactionActionPoint:1"
 // data "InterruptDefaultValue" "Ask;Enabled"
 // data "EnableCondition" "not HasAnyStatus({'SG_Polymorph','SG_Blinded'},{},{'WILDSHAPE_MYRMIDON_AIR_PLAYER','WILDSHAPE_MYRMIDON_AIR_PLAYER_12','WILDSHAPE_MYRMIDON_FIRE_PLAYER','WILDSHAPE_MYRMIDON_FIRE_PLAYER_12','WILDSHAPE_MYRMIDON_WATER_PLAYER','WILDSHAPE_MYRMIDON_WATER_PLAYER_12',}) or Tagged('MINDFLAYER') or HasAnyStatus({'SG_Disguise','WILDSHAPE_STARRY_ARCHER_PLAYER','WILDSHAPE_STARRY_CHALICE_PLAYER','WILDSHAPE_STARRY_DRAGON_PLAYER'});"
-data "EnableCondition" "((not HasStatus('SG_Polymorph') or Goon_IsUnrestrictedPolymorphStatus()) and not Goon_IsMyrmidonDruidPolymorph()) and not HasStatus('SG_Blinded')"
+data "EnableCondition" "((not HasStatus('SG_Polymorph') or Goon_IsUnrestrictedPolymorphStatus())) and (not HasStatus('SG_Blinded') or Goon_CanIgnoreBlindness())"
 // data "EnableContext" "OnStatusApplied;OnStatusRemoved"
 data "InterruptFlags" "InterruptWhileInvisible"
 

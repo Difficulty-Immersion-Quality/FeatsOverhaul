@@ -48,6 +48,6 @@ data "Conditions" "Goon_AttackOfOpportunityConditions() and not Self(context.Obs
 // data "Stack" "AttackOfOpportunity"
 // data "InterruptDefaultValue" "Ask;Enabled"
 // data "EnableCondition" "not HasAnyStatus({'SG_Polymorph','SG_Blinded'}) or HasAnyStatus({'SG_Disguise','WILDSHAPE_STARRY_ARCHER_PLAYER','WILDSHAPE_STARRY_CHALICE_PLAYER','WILDSHAPE_STARRY_DRAGON_PLAYER'});"
-data "EnableCondition" "(not HasStatus('SG_Polymorph') or Goon_IsUnrestrictedPolymorphStatus()) and not HasStatus('SG_Blinded')"
+data "EnableCondition" "((not HasStatus('SG_Polymorph') or Goon_IsUnrestrictedPolymorphStatus())) and (not HasStatus('SG_Blinded') or Goon_CanIgnoreBlindness())"
 // data "EnableContext" "OnStatusApplied;OnStatusRemoved"
 data "InterruptFlags" "InterruptWhileInvisible"

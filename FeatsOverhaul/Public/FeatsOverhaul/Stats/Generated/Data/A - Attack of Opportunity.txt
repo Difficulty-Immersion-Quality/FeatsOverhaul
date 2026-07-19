@@ -1,23 +1,22 @@
 // ==================================== Opportunity Attack ====================================
-// Bug Fix: Gnoll's Sudden Rush is properly implemented in the conditions, preventing Opportunity Attacks against them.
+// Bug Fix: Many fixes to conditions.
 // Bug Fix: Can now be used by Invisible player characters.
 // Changes: Invisible creatures can be attacked if the entity reacting can see through invisibility.
 // Changes: Player characters can now break Sanctuary with an Opportunity Attack.
-// ... and many more fixes...
 
 new entry "Interrupt_AttackOfOpportunity"
 type "InterruptData"
 using "Interrupt_AttackOfOpportunity"
-// Opportunity Attack
+// // Opportunity Attack
 // data "DisplayName" "ha47b8d48g1a33g43e3gb98agc3b2c22668b8;1"
-// Attack an enemy moving out of your reach.
+// // Attack an enemy moving out of your reach.
 // data "Description" "h3e87bdfcg0860g468eg9a8eg1bd073914fee;1"
 // data "Icon" "PassiveFeature_AttackOfOpportunity"
 // data "InterruptContext" "OnLeaveAttackRange"
 // data "InterruptContextScope" "Self"
 // data "Container" "YesNoDecision"
 // data "Conditions" "IsAbleToReact(context.Observer) and not Self(context.Observer, context.Target) and Enemy() and not HasStatus('SANCTUARY',context.Source) and not WieldingWeapon('Ammunition', false, false, context.Source) and not (not Player(context.Source) and Tagged('AI_IGNORED_TARGET')  and not HasStatus('GNOLL_SUDDENRUSH')) and not HasStatus('SHOCKWAVE') and not (HasStatus('MOBILE_NO_AOO', context.Source) and HasStatus('MOBILE_NO_AOO_SOURCE', context.Target)) and not HasStatus('FLAMING_SPHERE_AURA') and not HasStatus('SNEAKING',context.Target) and not HasStatus('SG_Ignore_AOO',context.Target)  and not AnyEntityIsItem() and not HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) and not (HasStatus('FANCYFOOTWORK', context.Source,context.Target) and HasStatus('FANCYFOOTWORK_OWNER', context.Target)) and (not HasStatus('PANACHE', context.Source)) or (HasStatus('PANACHE', context.Source) and HasStatus('PANACHE_OWNER', context.Target));"
-data "Conditions" "Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target)"
+data "Conditions" "Goon_AttackOfOpportunityConditions()"
 // data "Properties" "IF(not HasPassive('Sentinel_ZeroSpeed',context.Source)):UseAttack();IF(HasPassive('Sentinel_ZeroSpeed',context.Source)):UseSpell(Target_Sentinel_AttackOfOpportunity,true,true,true);TutorialEvent(SWAP,f658a860-7e3e-44fd-807b-88d3c0c31217)"
 // data "Cost" "ReactionActionPoint:1"
 // data "InterruptDefaultValue" "Enabled"
