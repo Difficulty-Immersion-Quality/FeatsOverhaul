@@ -2,7 +2,6 @@ local H = Ext.Require("HelperFunctions.lua")
 
 -- =========== Helper functions ===========
 
--- Clears the linter errors
 ---@param weapon string
 local function isPolearm(weapon)
     return Osi.IsEquipmentWithProficiency(weapon, "Glaives") == 1
@@ -23,7 +22,6 @@ end
 -- Applying CHT_REACH_OVERWRITE
 Ext.Osiris.RegisterListener("Equipped", 2, "after", function(item, character)
     -- Listening for when a character without the PAM feat equips an item with the CHT_REACH_OVERWRITE status
-    -- HasActiveStatus returns 0/1 and 0 is truthy in Lua, so it has to be == 1 or the check always passes
     if Osi.HasActiveStatus(item, "CHT_REACH_OVERWRITE") == 1 and Osi.HasPassive(character, "PolearmMaster_AttackOfOpportunity") == 0 then
         Osi.RemoveStatus(item, "CHT_REACH_OVERWRITE")
     end
@@ -53,7 +51,6 @@ end)
 
 -- =========== Dynamically adjusting weapon range when CHT_REACH_OVERWRITE status is applied ===========
 
--- nothing unregisters these listeners, so no need to hang onto the RegisterListener handle
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after",
     function(weapon, status, causee, storyId)
         if (status ~= "CHT_REACH_OVERWRITE") then
@@ -66,9 +63,6 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after",
         end
         -- Update the WeaponRange property.
         -- Note: Stats use hundreds e.g. 150, but calculated on entity it ends up as 1.50
-        -- nothing references this, safe to delete
-        -- local defaultMeleeRange = tonumber(Ext.Stats.Get("_BaseWeapon")["WeaponRange"]) / 100 or 1.50
-        -- Use dots instead of brackets
         local oldRange = entity.Weapon.WeaponRange
         entity.Weapon.WeaponRange = tonumber(Ext.Stats.Get("WPN_Pike").WeaponRange) / 100
         entity:Replicate("Weapon") -- Update/sync clients
@@ -94,9 +88,6 @@ Ext.Osiris.RegisterListener("StatusRemoved", 4, "after",
         local entityStatsId = entity.Data.StatsId
         -- Update the WeaponRange property.
         -- Note: Stats use hundreds e.g. 150, but calculated on entity it ends up as 1.50
-        -- neither is referenced any longer, safe to delete
-        -- local defaultMeleeRange = tonumber(Ext.Stats.Get("_BaseWeapon")["WeaponRange"]) or 1.50
-        -- local defaultReachRange = tonumber(Ext.Stats.Get("WPN_Pike")["WeaponRange"]) or 2.50
         local oldRange = entity.Weapon.WeaponRange
         entity.Weapon.WeaponRange = tonumber(Ext.Stats.Get(entityStatsId).WeaponRange) / 100
         entity:Replicate("Weapon") -- Update/sync clients

@@ -15,12 +15,12 @@ local function initializeweaponProperties()
                 entity:Replicate("Weapon")
             end
         end
-        -- -- Debugging (note: can't get display name since getNameFromGuid() uses Osiris calls but those are apparently not available on SessionLoaded))
+        -- -- Debugging
         -- _P(string.format("[FeatsOverhaul] [initializeweaponProperties()] ModVars Dump =>"))
         -- for uuid, data in pairs(ModVars) do
         --     local entity = H.GetEntity(uuid)
-        --     _P(string.format("| Stored UUID: '%s' | Stored Weapon Properties: '%s' | Stored Wielder: '%s'",
-        --         uuid, data.WeaponProperties, tostring(data.Wielder)))
+        --     _P(string.format("| Stored Weapon: '%s' | Stored UUID: '%s' | Stored Weapon Properties: '%s' | Stored Wielder: '%s'",
+        --         H.GetDisplayName(uuid), uuid, data.WeaponProperties, tostring(data.Wielder)))
         -- end
     end
 end
@@ -35,9 +35,7 @@ local function removeVersatile(weapon)
     local weaponProperties_New = weaponProperties & ~2048
     weapon.Weapon.WeaponProperties = weaponProperties_New
     -- Stores the new properties to the weapon entity in the mod variable
-    -- Use dots instead of brackets
     local entityUUID = weapon.Uuid.EntityUuid
-    -- prefixed with Osi. for consistency with the rest of the file
     local wielderUUID = Osi.GetInventoryOwner(weapon.Uuid.EntityUuid)
     local ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
     ModVars[entityUUID] = {
@@ -65,13 +63,11 @@ local function restoreVersatile(weapon)
     -- Returns as bit flags (decimal)
     local weaponProperties = weapon.Weapon.WeaponProperties
     -- Add Versatile property (=2048 in decimal form under WeaponFlags)
-    -- OR the bit back in; + would corrupt the flags if Versatile were somehow already set
     local weaponProperties_New = weaponProperties | 2048
     weapon.Weapon.WeaponProperties = weaponProperties_New
     -- Remove the weapon's entry in the mod variables table
     local entityUUID = weapon.Uuid.EntityUuid
     local ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
-    -- Just clear the one key, no need to loop or monkey-patch a removekey onto the global table
     ModVars[entityUUID] = nil
     Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker = ModVars
     -- Replicate the Weapon component after changing properties
@@ -129,7 +125,6 @@ Ext.Osiris.RegisterListener("StatusRemoved", 4, "after", function(weapon, status
     local entityUUID = weaponEntity.Uuid.EntityUuid
     local ModVars = Ext.Vars.GetModVariables(ModuleUUID).WeaponPropertyTracker or {}
     -- Some other status restored Versatile while the CHT_DUELIST_REMOVED_VERSATILE status is still active, so remove CHT_DUELIST_REMOVED_VERSATILE
-    -- was `~= 0` (always true) and a bare `& 2048` (0 is truthy) — mirror the correct check on the StatusApplied side
     if status ~= "CHT_DUELIST_REMOVED_VERSATILE" and Osi.HasActiveStatus(entityUUID, "CHT_DUELIST_REMOVED_VERSATILE") == 1 and (weaponEntity.Weapon.WeaponProperties & 2048) ~= 0 then
         -- Remove status from weapon and add weapon to the guard table to prevent the status removal from re-triggering this listener and triggering the restoreVersatile() function
         suppressRestore[weapon] = true
