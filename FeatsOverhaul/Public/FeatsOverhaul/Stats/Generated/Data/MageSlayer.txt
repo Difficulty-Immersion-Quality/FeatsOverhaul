@@ -51,7 +51,7 @@ data "Properties" "Highlighted"
 // type "PassiveData"
 // // Mage Slayer: Attack Caster
 // data "DisplayName" "h3b348abcg1ccbg4ac2gadcbgf97694100813;2"
-// // You can use a <LSTag Type="ActionResource" Tooltip="ReactionActionPoint">reaction</LSTag> to make an attack against an enemy after it casts a spell within [1] of you.
+// // You can use a &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;reaction&lt;/LSTag&gt; to make an attack against an enemy after it casts a spell within [1] of you.
 // data "Description" "ha36dcc22gd0c0g498fga346ged1bebb7c456;3"
 // data "DescriptionParams" "Distance(1.5)"
 // data "TooltipUseCosts" "ReactionActionPoint:1"
@@ -59,19 +59,23 @@ data "Properties" "Highlighted"
 // data "Properties" "Highlighted"
 // data "Boosts" "UnlockInterrupt(Interrupt_MageSlayer)"
 
-// new entry "Interrupt_MageSlayer"
-// type "InterruptData"
+new entry "Interrupt_MageSlayer"
+type "InterruptData"
+using "Interrupt_MageSlayer"
 // // Mage Slayer
 // data "DisplayName" "ha7485350ga681g4861gbd5bg3d4c8df27e98;1"
-// // Attack an enemy as a <LSTag Type="ActionResource" Tooltip="ReactionActionPoint">reaction</LSTag> if they cast a spell near you. 
+// // Attack an enemy as a &lt;LSTag Type="ActionResource" Tooltip="ReactionActionPoint"&gt;reaction&lt;/LSTag&gt; if they cast a spell near you. 
 // data "Description" "h9b63daaeg493bg470fga510g69dc14094f35;2"
 // data "Icon" "PassiveFeature_MageSlayer_AttackACaster"
 // data "InterruptContext" "OnSpellCast"
 // data "InterruptContextScope" "Nearby"
 // data "Container" "YesNoDecision"
 // data "Conditions" "IsAbleToReact(context.Observer) and not Self(context.Source, context.Observer) and Enemy(context.Source, context.Observer) and IsSpell() and not Uninterruptible() and not DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source) and not AnyEntityIsItem()"
+data "Conditions" "Goon_BasicHarmfulInterruptConditions() and Goon_InAttackRange(false,false,false,true) and not Self(context.Source, context.Observer) and Enemy(context.Source, context.Observer) and IsSpell() and not Uninterruptible()"
 // data "Properties" "UseAttack(OBSERVER_SOURCE)"
 // data "Cost" "ReactionActionPoint:1"
 // data "InterruptDefaultValue" "Ask;Enabled"
 // data "EnableCondition" "not HasStatus('SG_Disguise')"
+data "EnableCondition" "Goon_BasicHarmfulInterruptEnableConditions(true)"
 // data "EnableContext" "OnStatusApplied;OnStatusRemoved"
+data "InterruptFlags" "InterruptWhileInvisible"
