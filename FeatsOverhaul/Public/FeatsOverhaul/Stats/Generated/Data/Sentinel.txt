@@ -1,5 +1,6 @@
 // =================================== Sentinel: Vengeance ===================================
-// Bug Fix: Can now be used by Invisible player characters.
+// Bug Fix: Can now be used by Invisible characters.
+// Changes: Restrictions on what attacks you can interrupt loosened to be pseudo 5e RAW; you can now interrupt all attackers except for allies, instead of strictly enemies attacking allies.
 
 // new entry "Sentinel_Attack"
 // type "PassiveData"
@@ -23,7 +24,7 @@ using "Interrupt_Sentinel"
 // data "InterruptContextScope" "Nearby"
 // data "Container" "YesNoDecision"
 // data "Conditions" "not Self(context.Target,context.Observer) and not Self(context.Source,context.Observer) and Ally(context.Target, context.Observer) and Enemy(context.Source, context.Observer) and not HasPassive('Sentinel_Attack',context.Target) and IsAbleToReact(context.Observer) and IsMeleeAttack() and not DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source) and not AnyEntityIsItem() and HasLastAttackTriggered()"
-data "Conditions" "Goon_BasicHarmfulInterruptConditions() and Goon_InAttackRange(false,false,false,true) and not Self(context.Target,context.Observer) and not Self(context.Source,context.Observer) and not Ally(context.Source, context.Observer) and not HasPassive('Sentinel_Attack',context.Target) and IsMeleeAttack() and HasLastAttackTriggered()"
+data "Conditions" "Goon_BasicHarmfulInterruptConditions(false,true) and Goon_InAttackRange(nil,nil,false,true) and not Self(context.Target, context.Observer) and Ally(context.Target, context.Observer) and not HasPassive('Sentinel_Attack',context.Target) and IsMeleeAttack()"
 // data "Properties" "UseAttack(OBSERVER_SOURCE)"
 // data "Cost" "ReactionActionPoint:1"
 // data "InterruptDefaultValue" "Ask;Enabled"

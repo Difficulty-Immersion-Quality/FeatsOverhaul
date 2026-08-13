@@ -19,9 +19,10 @@ data "Icon" "PassiveFeature_MageSlayer_BreakConcentration"
 data "StackId" "MAGESLAYER_AURA"
 data "StackPriority" "10"
 data "AuraRadius" "3"
-data "AuraStatuses" "TARGET:IF(Enemy()):ApplyStatus(MAGESLAYER_AURA_BUFF)"
+data "AuraStatuses" "TARGET:IF(Enemy() and not Dead()):ApplyStatus(MAGESLAYER_AURA_BUFF)"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting"
 data "StatusGroups" "SG_RemoveOnRespec"
+data "AuraFlags" "IgnoreItems"
 
 new entry "MAGESLAYER_AURA_BUFF"
 type "StatusData"
@@ -46,6 +47,8 @@ data "Boosts" "IF(IsSpell()):Advantage(AllSavingThrows);IF(IsSpell()):DamageRedu
 data "Properties" "Highlighted"
 
 // =================================== Mage Slayer: Attack Caster ===================================
+// Bug Fix: Added checks for waiting on HasLastAttackTriggered if the spell is an attack, to prevent edge cases where the interrupt cuts a spell cast short.
+// Changes: Interrupt is no longer prevented by the caster being uninterruptable, per 5e RAW.
 
 // new entry "MageSlayer_AttackCaster"
 // type "PassiveData"
@@ -71,7 +74,7 @@ using "Interrupt_MageSlayer"
 // data "InterruptContextScope" "Nearby"
 // data "Container" "YesNoDecision"
 // data "Conditions" "IsAbleToReact(context.Observer) and not Self(context.Source, context.Observer) and Enemy(context.Source, context.Observer) and IsSpell() and not Uninterruptible() and not DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source) and not AnyEntityIsItem()"
-data "Conditions" "Goon_BasicHarmfulInterruptConditions() and Goon_InAttackRange(false,false,false,true) and Enemy(context.Source, context.Observer) and IsSpell() and (not IsAttack() or HasLastAttackTriggered()) and not Uninterruptible()"
+data "Conditions" "Goon_BasicHarmfulInterruptConditions(false,true) and Goon_InAttackRange(nil,nil,false,true) and Enemy(context.Source, context.Observer) and IsSpell()"
 // data "Properties" "UseAttack(OBSERVER_SOURCE)"
 // data "Cost" "ReactionActionPoint:1"
 // data "InterruptDefaultValue" "Ask;Enabled"
